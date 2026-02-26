@@ -1,5 +1,5 @@
 # ---- Project settings ----
-NAME       := myproj
+NAME       := $(notdir $(CURDIR)) 
 SRC_DIR    := src
 BUILD_DIR  := build
 OBJ_DIR    := $(BUILD_DIR)/obj
