@@ -11,16 +11,17 @@ STD        := -std=c23
 WARN       := -Wall -Wextra -Wpedantic
 CPPFLAGS   := -I$(SRC_DIR)
 CFLAGS     := $(STD) $(WARN)
-LDFLAGS    :=
+LDFLAGS    := -fsanitize=address,undefined
 LDLIBS     :=
 
 # ---- Build modes ----
-# Default: debug (no optimization, symbols)
+# Default: debug (no optimization, symbols, address sanitizer + undefined
+# 	behavior sanitizer(see LDFLAGS), frame pointer for traces)
 MODE ?= debug
 ifeq ($(MODE),release)
   CFLAGS += -O2 -DNDEBUG
 else
-  CFLAGS += -O0 -g
+  CFLAGS += -O0 -g -fsanitize=address,undefined -fno-omit-frame-pointer
 endif
 
 # ---- Source discovery (recursive) ----
